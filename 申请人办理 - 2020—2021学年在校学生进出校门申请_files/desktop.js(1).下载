@@ -1,0 +1,47 @@
+$$.ready(function(){
+	InfoPlus.Language.common.confirmAction="确定";
+			//按钮位置调整
+	if($("#form_command_bar li.command_button").size()>0){
+			var divs=$("<div class='btns'></div>");
+			$(".infoplus_view:last").append(divs);
+			if (document.body.style.overflow!="hidden"&&document.body.scroll!="no"&&document.body.scrollWidth>document.body.offsetWidth) {
+				var btnGroup=$("<ul class='btn_group'></ul>")
+				$("body").append(btnGroup);
+			} else {
+				var btnGroup=$("<ul class='btn_group btn_toEnd'></ul>")
+				$(".btns").append(btnGroup);
+			}
+			$("#form_command_bar li.command_button").each(function(index,item){
+				var newLi=$("<li>"+$(item).html()+"</li>");
+				newLi.click(function(){
+//					for(var i=0;i<intervalGroup.length;i++){
+//						clearInterval(intervalGroup[i]);
+//					}
+					$(item).click();
+				})
+				$(".btn_group").append(newLi);
+			})
+			setTimeout(function(){
+				var a = $(".btns").eq(0).offset().top;
+		    if (a< ($(window).scrollTop()+$(window).height())) {
+		        $(".btns").append($(".btn_group"));
+				$(".btn_group").addClass("btn_toEnd");
+		    }else{
+		    	$("body").append($(".btn_group"));
+				$(".btn_group").removeClass("btn_toEnd");
+		    }
+			},1000);
+			
+	}
+	//按钮没有在可视区域的时候定位在最后
+	$(document).scroll(function(){
+        var a = $(".btns").offset().top;
+        if (a< ($(window).scrollTop()+$(window).height())) {
+            $(".btns").append($(".btn_group"));
+			$(".btn_group").addClass("btn_toEnd");
+        }else{
+        	$("body").append($(".btn_group"));
+			$(".btn_group").removeClass("btn_toEnd");
+        }
+	})
+})
